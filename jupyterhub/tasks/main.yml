@@ -1,0 +1,45 @@
+---
+# tasks file for samplerolename
+# file: main.yml
+    - name: check for the latest version and install 
+      tags: always
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: yes #don't use in centos
+      #when: ansible_distribution in ["Ubuntu","Debian"]
+      #when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "20.04" 
+      loop:
+        - nmap
+        
+    - name: remove a package
+      apt:
+         name: nmap
+
+#    - name: copy a file1
+#      tags: file_copy
+#      copy:
+#        src: /home/hasan/ansible_test/notes.md
+#        dest: /home/hasan/ansible_test/test/copy.md
+#        owner: root
+#        group: root 
+#        mode: 0755
+#    
+#    - name: change a file name a file1
+#      tags: change_line
+#      lineinfile:
+#        path: /home/hasan/ansible_test/test/copy.md
+#        regexp: '^ansible-playbook --tags centos'
+#        line: ansible-playbook --tags centoss
+#        group: root 
+#        mode: 0755
+#    
+    - name: enable/start httpd service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      notify:
+        - restart nginx
+
+         
